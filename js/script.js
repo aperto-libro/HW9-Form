@@ -1,17 +1,11 @@
+const form = document.forms.todoForm;
 const input = document.querySelector('.todo-input');
-const button = document.querySelector('.add-todo');
 const ul = document.querySelector('.todo-list');
 
-button.addEventListener('click', function () {
-  if (input.value) {
-    let data = createListItem(input.value);
-
-    ul.append(data);
-    input.value = '';
-  }
-});
-
-ul.addEventListener('click', changeList);
+function checkInputValidation() {
+  const regexp = /^[а-яА-ЯёЁ\w\s]{2,15}$/;
+  return regexp.test(input.value);
+}
 
 function createListItem(elem) {
   let li = document.createElement('li');
@@ -24,8 +18,8 @@ function removeElem(el) {
   el.closest('li').remove();
 }
 
-function toggleElem(el) {
-  el.classList.toggle('done');
+function toggleElem(el, toggleClass) {
+  el.classList.toggle(toggleClass);
 }
 
 function changeList(event) {
@@ -36,9 +30,48 @@ function changeList(event) {
       removeElem(target);
       break;
     case 'LI':
-      toggleElem(target);
+      toggleElem(target, 'done');
       break;
     default:
       console.log('error');
   }
 }
+
+let errorMessage = createErrorMessage();
+
+function createErrorMessage() {
+  let message = document.createElement('p');
+  message.innerText = 'Invalid data';
+  message.classList.add('error-message');
+  return message;
+}
+
+function addErrorMessage() {
+  form.after(errorMessage);
+}
+
+function removeErrorMessage() {
+  errorMessage.remove();
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  if (checkInputValidation()) {
+    let data = createListItem(input.value);
+    ul.append(data);
+    input.value = '';
+  }
+});
+
+input.addEventListener('change', () => {
+  if (checkInputValidation()) {
+    input.classList.remove('invalid-input');
+    removeErrorMessage();
+  } else {
+    input.classList.add('invalid-input');
+    addErrorMessage();
+  }
+});
+
+ul.addEventListener('click', changeList);

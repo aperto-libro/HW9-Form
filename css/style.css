@@ -15,6 +15,10 @@ body {
   line-height: 1.71;
 }
 
+form {
+  display: flex;
+}
+
 .wrap {
   width: 400px;
   margin: 50px auto;
@@ -26,8 +30,23 @@ body {
   margin-bottom: 10px;
 }
 
+.invalid-input {
+  border-width: 2px;
+  border-color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
+}
+
+.error-message {
+  display: inline-block;
+  margin: 0;
+  font-weight: 700;
+  color: rgb(255, 0, 0);
+}
+
 .add-todo {
-  padding: 10px 40px;
+  margin-left: 5px;
+  width: 150px;
+  height: 40px;
   font-weight: 500;
   letter-spacing: 0.06em;
   background-color: #727272;
