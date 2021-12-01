@@ -3,7 +3,7 @@ const input = document.querySelector('.todo-input');
 const ul = document.querySelector('.todo-list');
 
 function checkInputValidation() {
-  const regexp = /^[а-яА-ЯёЁ\w\s]{2,15}$/;
+  const regexp = /^[\w\s]{2,15}$/;
   return regexp.test(input.value);
 }
 
